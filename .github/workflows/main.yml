@@ -31,6 +31,7 @@ jobs:
     - run: |
         sudo apt update -qqy
         sudo apt install -qqy php-cli php-mbstring php-xml php-mysql
+        php --version
       if: ${{ matrix.target == 'php' }}
     - run: npm i
     - run: npm run test ${{ matrix.target }}
