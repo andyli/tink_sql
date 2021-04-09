@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     services:
       mysql:
         image: mysql:5.7
@@ -28,5 +28,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
+    - run: |
+        sudo apt update -qqy
+        sudo apt install -qqy php-cli php-mbstring php-xml php-mysql
+      if: ${{ matrix.target == 'php' }}
     - run: npm i
     - run: npm run test ${{ matrix.target }}
