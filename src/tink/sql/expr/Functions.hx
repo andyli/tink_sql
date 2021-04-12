@@ -1,5 +1,6 @@
 package tink.sql.expr;
 
+import tink.sql.Types.Json;
 import tink.sql.Expr;
 import tink.s2d.*;
 
@@ -37,4 +38,10 @@ class Functions {
 
   public static function exists(q:Dataset<Dynamic, Dynamic, Dynamic>):Condition
     return ECall('EXISTS ', cast [q.toExpr()], VBool, false);
+
+  /**
+   * JSON_VALUE was introduce in MySQL 8.0.21, not available in SQLite as of writing
+   */
+  public static function jsonValue<T>(jsonDoc:Expr<Json>, path:Expr<String>, returnType:ExprType<T>):Expr<T>
+    return ECall('JSON_VALUE', cast [jsonDoc, path], returnType);
 }
